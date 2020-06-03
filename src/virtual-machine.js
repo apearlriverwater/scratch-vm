@@ -866,6 +866,11 @@ class VirtualMachine extends EventEmitter {
         costume.rotationCenterX = rotationCenterX;
         costume.rotationCenterY = rotationCenterY;
 
+        // Zero-size bitmaps cause trouble and thus should not be stored
+        if (bitmap.width === 0 || bitmap.height === 0) {
+            throw new Error('Costume bitmap has width and/or height of 0');
+        }
+
         // @todo: updateBitmapSkin does not take ImageData
         const canvas = document.createElement('canvas');
         canvas.width = bitmap.width;
